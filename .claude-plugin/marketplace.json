@@ -1,0 +1,16 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "atlas-code",
+  "owner": {
+    "name": "ZoCCo"
+  },
+  "description": "Four independent dials — compression (low/high), rigour (ask), check and silent — plus ten subagents that keep searches, logs, pages and big files out of your conversation. Compresses without losing a fact, and refuses to start building before the goal is clear. This variant adds coding and documents: review by language, build fixing, tests, verification, planning, shipping, specs, changelogs and the rest, each read only when used.",
+  "plugins": [
+    {
+      "name": "atlas-code",
+      "source": "./",
+      "version": "0.1.1",
+      "description": "Four independent dials — compression (low/high), rigour (ask), check and silent — plus ten subagents that keep searches, logs, pages and big files out of your conversation. Compresses without losing a fact, and refuses to start building before the goal is clear. This variant adds coding and documents: review by language, build fixing, tests, verification, planning, shipping, specs, changelogs and the rest, each read only when used."
+    }
+  ]
+}
