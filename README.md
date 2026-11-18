@@ -8,6 +8,8 @@
 /plugin install atlas-code@atlas
 ```
 
+It needs `node` on the PATH and Claude Code 2.1.139 or later.
+
 It ships off, and nothing changes until you type `atlas low` or `atlas high`. Install one ATLAS build: two side by side inject the rules twice. To add the memory and video too, install [`atlas-max`](https://github.com/Z0CC0/ATLAS-max) instead.
 
 **Is it for you?** Yes if you write code in long sessions and use the commands. No if your sessions are short: below about 51 turns it costs more than no plugin at all. [`atlas`](https://github.com/Z0CC0/ATLAS) is the lighter choice then.
