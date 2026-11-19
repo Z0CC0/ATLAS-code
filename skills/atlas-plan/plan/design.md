@@ -31,6 +31,13 @@ framework, the database driver or the vendor SDK; they import it.
 One owner per fact: a value stored in two places has two versions.
 No abstraction for code used once. Three similar things before a shared one.
 
+## A new app
+
+When the thing being designed is an app a person operates, its structure is not an open
+option: `atlas-stack`, `stack/app.md`. Every action a command, the state a text file, a
+command line that runs without a window. It is in the plan from the first step, because it
+is cheap on day one and a rewrite on day ninety. The options above are about everything else.
+
 ## When two sides meet
 
 A front end and a back end, two services, a library and its callers: the contract first, as

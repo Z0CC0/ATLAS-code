@@ -39,6 +39,10 @@ By the project's files:
 By what the work touches, on top of the language:
 a schema, a migration, a query, an ORM model, Redis → `database.md`
 an HTTP endpoint, a service layer, error responses, a public contract → `api.md`
+a new app or program with an interface a person operates (desktop, web with a backend,
+mobile, a tool with a window), or a new action added to one built this way → `app.md`:
+every action a command, the state a text file, a command line without a window, so an
+agent can drive what was made for people
 
 No file for the stack: say so in one line and write by the project's own code alone.
 

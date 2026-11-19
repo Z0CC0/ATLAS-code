@@ -97,7 +97,7 @@ request that named the command loaded it every time; the same request in plain w
 | `atlas-build-ai` | code that calls a model: prompts, tools, evals, retrieval, cost, MCP | 9 | model names and prices are looked up, never remembered |
 | `atlas-context` | what every session loads, when to compact, one answer at a chosen depth | 4 | measures, does not guess |
 | `atlas-secure` | whole-project security audit: dangerous code, vulnerable dependencies, secrets in the files and the git history | 4 | only your own code; every finding carries its proof; changes nothing |
-| `atlas-stack` | how code is written in this project's language and framework | 18 | `atlas-plan` sends for it before writing code; it can be named too. The project's own conventions come first |
+| `atlas-stack` | how code is written in this project's language and framework | 22 | `atlas-plan` sends for it before writing code; it can be named too. The project's own conventions come first |
 
 
 **Documents.** The spec before the build, the changelog after it, the text other agents read, the explanation one person needs:

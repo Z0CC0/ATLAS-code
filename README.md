@@ -45,9 +45,11 @@ For the documents that are not code:
 | `atlas brief` | writes the text other agents read: a project's `CLAUDE.md` or `AGENTS.md`, a rules file scoped to a path, the description and body of a skill or a subagent, with the token cost measured |
 | `atlas explain` | explains one thing to one reader: in plain words for someone who does not code, a decision with the options that lost and what would reopen it, a table of measurements with what it proves and what it does not |
 
-One more skill is not typed: `atlas-stack`, eighteen short files on how code is written in
+One more skill is not typed: `atlas-stack`, twenty-two short files on how code is written in
 a given language or framework. `atlas plan` reads the one for your project before writing
-code.
+code. One of them is about apps: a new app comes out with every action as a named command,
+its state in a text file and a command line that runs without a window, so it is made for
+people and an agent can drive it without the screen.
 
 Each skill is a short router with a folder of files beside it. Only its description is
 loaded in every session; a file is read when the request calls for it.
