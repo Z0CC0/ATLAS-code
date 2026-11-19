@@ -2,13 +2,13 @@
 name: atlas-ui
 description: >
   Builds and repairs interfaces so they look intended and work for everyone: a design
-  direction, the small details that make a screen feel finished, accessibility to WCAG 2.2
-  AA, motion, design tokens, and turning a screenshot or mock-up into components of the
-  project's own kind; or fetches one from a public component registry and makes it the
-  project's own. Starts from what the project already has and checks the result in a
-  browser when there is one. Use for "atlas ui", "make this look better", "it feels off",
-  "accessibility", "a11y audit", "animate this", "design tokens", "build this from the
-  screenshot", "is there a component for this" — in any language.
+  direction, a page that persuades and its words, the details that make a screen feel
+  finished, accessibility to WCAG 2.2 AA, motion, design tokens, and a screenshot turned
+  into components of the project's own kind; or fetches one from a public component
+  registry. Starts from what the project already has and checks the result in a browser.
+  Use for "atlas ui", "build a website", "landing page", "make this look better", "it feels
+  off", "a11y audit", "animate this", "design tokens", "build this from the screenshot",
+  "is there a component for this" — in any language.
 ---
 
 An interface is judged in the first second and used for years. Both count: what it looks
@@ -22,8 +22,11 @@ Everything below lives in the `ui/` folder beside this file.
    has, how the result is checked, the report. Then `ui/house.md`: how to find the project's
    own style file and what in it overrides every rule here.
 2. By the words of the request, one file or more:
-   "direction", "redesign", "landing page", "looks generic", a new screen from nothing →
-   `direction.md`
+   "website", "site", "landing page", "home page", any page that must win a visitor →
+   `method.md`, `direction.md`, `page.md`, `copy.md`, `taste.md`, `polish.md`
+   "copy", "headline", "what should it say", "the words on the page" → `copy.md` (with
+   `page.md`)
+   "direction", "redesign", "looks generic", a new screen from nothing → `direction.md`
    "polish", "feels off", "cramped", "flat", "unfinished", "make it nicer" → `polish.md`
    "taste", "make it beautiful", "looks cheap", "like a real product", "what would a
    designer do", a screen built from nothing → `taste.md` (with `direction.md`)
@@ -33,9 +36,14 @@ Everything below lives in the `ui/` folder beside this file.
    a screenshot, a mock-up, a design export, "build this" → `from-image.md`
    "critique", "review this screen", "what is wrong with it", "is it good" → `method.md`
    "which looks better", "show me options", "variants", "two versions of this" → `variants.md`
+   navigation, menus, tabs, "state in the URL", "the back button", a phone layout, safe
+   areas, a web app in a native shell → `shell.md`
+   WebGL, Three.js, a 3D scene or model on a page → `3d.md`
    Before a polish pass, a critique or an accessibility check of files that exist: run
    `ui/lint.mjs` on them (the command is in `polish.md`) and start from what it prints.
-   (measure first), then `polish.md` and `taste.md`
+   On a page that renders, `ui/gates.js` runs in the page first (`browser.md`), and no
+   judgement of taste is written while one of its gates fails; then `polish.md` and
+   `taste.md`.
    "check it in the browser", "at every width", "dark mode too" → `browser.md`
    "is there a component for", "from a library", "a date picker without writing it",
    "take it from shadcn" → `components.md` (search first, then `house.md` and `tokens.md`)

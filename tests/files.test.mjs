@@ -28,7 +28,7 @@ for (const [root, skill] of ROOTS.flatMap((r) => fs.readdirSync(r).map((s) => [r
       // `docs/onboarding.md` with a folder this skill does not have is a path in the
       // user's project, not a rule file; `0007-....md` is an example of a file to write
       if (m[1] && !sub.includes(m[1])) continue
-      if (/^\d/.test(m[2])) continue
+      if (/^\d+-/.test(m[2])) continue
       named.add(m[2])
     }
     // a file another skill ships may be named here (atlas-secure points at review's security.md)

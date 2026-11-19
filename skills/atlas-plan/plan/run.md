@@ -76,6 +76,26 @@ are measured against, its `not doing` is what review marks `outside`. Nothing el
 in the model's head. If the conversation is long, the plan is re-read from where it was
 written, not from memory.
 
+## How far the run got
+
+At Gate 1 the approved plan is written to `.git/atlas-run.md`, inside `.git` like the verify
+record, so it is never committed. When a step's check passes, its line gets `done` and the
+files it changed; at Gate 2 each commit hash goes beside the steps it holds. A run resumed
+after a compaction or a new session reads that file, `git log` and `git diff --stat` before
+anything else, and never redoes a step marked `done` whose files still show the change. A
+step marked `done` whose change is gone is reported, not silently redone. The file is
+removed after the commit.
+
+## A delegate's "done"
+
+A subagent or a workflow that reports success (`atlas-fixer`, `atlas-tester`, a review run)
+is checked before its word reaches the user: `git diff --stat` on the files it said it
+changed, and the one test or command that decides the step, run again here. A claimed change
+that is not in the diff, or a deciding test that does not pass, means the step is not done;
+it goes back to the delegate once with what was found, and a second false report stops the
+run as the same failure twice.
+(The progress record and the check of a delegate's report: obra/superpowers, MIT.)
+
 ## At the end
 
 After the yes at Gate 2 and the commit: one line with the commit hashes. No recap.

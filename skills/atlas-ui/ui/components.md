@@ -6,6 +6,17 @@ catalogue sells: search, fetch the source, adapt it to this project, verify. Her
 done with public registries that need no account and no key, and nothing is installed
 behind the user's back.
 
+## 0. Before searching: the platform and the house
+
+When a component the project already has, plus an element the browser gives, does the job,
+that is the answer and no registry is searched: `<input type="date">`, `type="color"`,
+`type="file"` (a drop zone is a styled label over it), `<dialog>`, `<details>`, the
+`popover` attribute, `<select>`, `<datalist>`. Each comes with keyboard and screen reader
+support and costs no dependency, where the registry version is often hundreds of lines.
+The search below runs when the need is beyond these (a range of dates, a searchable list of
+thousands, a design the native control cannot take), and the report says which.
+(Platform before registry: DietrichGebert/ponytail, MIT.)
+
 ## 1. Search, here, with one command
 
 ```

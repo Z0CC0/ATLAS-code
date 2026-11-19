@@ -24,8 +24,15 @@ the reason, not invented.
    base: a file changed that the task never mentioned, a lockfile or generated file changed
    with no dependency change, a mode change, a whole-file reformat. Each is one line.
 
+7. **What a delegate said it did.** When the work came from a subagent or a workflow that
+   reported success, each file it named is in `git diff --stat`, and the test or command it
+   said passes is run again here. A named file with no change, or a claimed pass that fails
+   now, is one line, and the verdict is `NOT READY` whatever the other steps say.
+   (Checking a delegate's report: obra/superpowers, MIT.)
+
 A failing build stops steps 2 to 4: they would report the same failure four times. Steps 5
-and 6 always run; they read files, they do not need a green build.
+and 6 always run; they read files, they do not need a green build. Step 7 always reads the
+diff; its re-run waits for a green build.
 
 ## The four words
 

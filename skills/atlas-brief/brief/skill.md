@@ -45,3 +45,11 @@ somewhere. The description routes the three phrases a person would actually type
 languages the users speak. The frontmatter has no angle brackets or colons that break the
 parser. Then the count: descriptions of the whole plugin before and after, written in the
 notes with the date.
+
+A new rule in a skill is tested against a control before it is written: the same task in 5
+fresh sessions without the rule, then 5 with it, scored by one test fixed beforehand. When
+the control does not show the failure in at least 1 of its 5, the rule is not written, since
+it would cost tokens and change nothing. A failure of the output's shape is fixed with the
+shape the output must have, not with a list of what it must not do. A real exception is its
+own rule with its own condition, not a clause added to the rule it breaks.
+(Testing a rule against a control: obra/superpowers, MIT.)

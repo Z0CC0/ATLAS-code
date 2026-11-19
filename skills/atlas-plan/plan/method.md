@@ -38,14 +38,17 @@ mirrors   src/api/orders.ts:30  handler → service → repository
 1  src/domain/refund.ts          new: Refund type and the rule for partial refunds
      check: unit tests for 0, partial, full, over the charge
 2  src/services/refunds.ts       new: issue(), calls the provider, records the result      after 1
+     makes: issue(orderId: string, amount: Cents): Promise<Refund>
      check: provider faked; timeout and duplicate request covered
 3  src/api/refunds.ts            new route POST /refunds, validation like orders.ts:30      after 2
+     uses:  issue(orderId, amount) from 2
      check: 200, 400 bad body, 409 duplicate
 4  migrations/0043_refunds.sql   new table; reversible                                       before 2 in deploy
      check: up, down, up
 
 risks     the provider's sandbox does not return timeouts — fake them
           migration must ship before the code that writes the table
+inputs    amount 0 → 1 · same request twice → 2, 3 · provider timeout → 2 · no amount → 3
 done when POST /refunds on a paid order returns the refund and the order shows it
 not doing refund emails, admin UI
 ```
@@ -55,6 +58,17 @@ come after. A step is small enough to be reviewed alone and leaves the project b
 slices through the whole stack before wide layers: the first step that can be run end to end
 comes early.
 `not doing` is part of the plan: the adjacent work that was noticed and left out.
+
+In a `standard` or `large` plan, a step that creates or changes a function, type, route or
+table names its signature on a `makes` line, and a step that calls one made elsewhere names
+it on a `uses` line, because a name that drifts between steps shows only at build or review.
+After writing the plan, one pass over it: every name on a `uses` line appears, with the same
+parameters, on a `makes` line of an earlier step or exists in the code at a cited position.
+A mismatch is fixed in the plan before the gate.
+`inputs` lists the three to five inputs most likely to hurt a user that the request does not
+mention: empty, duplicate, interrupted, malformed, too large. Each points at the step whose
+check covers it; one that no step covers is a step added or a line in `not doing`.
+(Signatures in the steps and the inputs list: obra/superpowers, MIT.)
 
 ## The gate
 

@@ -9,7 +9,8 @@ both already in hand.
 1. **Dependencies** (`deps.md`): what the project pulls in, and which versions have known
    holes.
 2. **Secrets** (`secrets.md`): credentials in the files and in the git history.
-3. **Code** (`code.md`): the dangerous places in the source, whole tree, not one diff.
+3. **Code** (`code.md`): the dangerous places in the source, whole tree, not one diff. An
+   Electron or Tauri app adds `desktop.md`, because its doors are not routes.
 
 Asked for one, run that one. Asked "is it safe" with nothing named: all three, on the project
 in the working directory.
@@ -32,21 +33,53 @@ execution. `high` — the same, but needs a condition that often holds (a logged
 known id). `medium` — real, but limited to what the attacker already has, or hard to reach.
 `low` — defence in depth, hardening, a smell with no path shown.
 A tier never exceeds the damage shown: when the concrete harm cannot be stated, the tier is
-lower than it feels. A weakness seen but not shown to be reachable is `unproven`, with the
-one check that would settle it (a config value, a caller, a test input), not dropped and
-not dressed up as `critical`.
+lower than it feels. A weakness whose reach turns on one fact outside the source (a deployed
+setting, an identity, a route a proxy adds) is `needs_validation`, with that fact and the
+way the owner can observe it without harm, not dropped and not dressed up as `critical`. A
+fact inside the source (a caller, a config file in the repository) is read, not deferred.
+With no decisive fact left to name, the line is `rejected`: `needs_validation` is not a
+place to park a hunch. These are the three verdicts of `atlas-review`'s `security.md`, so a
+line keeps its word when it moves from a review to an audit.
+
+The test between `high` and `medium`: does the input cancel the control it meets, or only
+weaken it (fewer guesses, a shorter window, one more step)? Cancelled is `high` or above by
+reach; weakened is `medium` at most. These are `medium` at most unless the same finding shows
+how the missing piece is obtained: a missing header or cookie flag; an open redirect alone;
+script that runs only in the attacker's own session; anything that already needs admin
+rights or a shell; a session weakness that needs a stolen token; account enumeration alone.
+Not knowing how the program is deployed never lowers a tier; when one deployment fact
+decides the reach, the line is `needs_validation`. (The ceilings: usestrix/strix,
+Apache-2.0. The cancel-or-weaken test: cloudflare/security-audit-skill, MIT.)
 
 Every `critical` and `high` line is then handed, alone with the files it names and without
 the reasoning that produced it, to a second reader (`atlas-diff` when it exists, a fresh
 pass here when not) whose job is to break it: the guard that exists, the input that cannot
-occur, the boundary not crossed. What survives is reported as confirmed; what does not is
-struck with the reason, in the report. The one who found a line never confirms it.
-
-Two audits of the same tree find more than one: a second run starts from the first report,
-and the report says which run it is.
+occur, the boundary not crossed. A line is struck only on a named control: the file and line
+of the check, shown to run on every path from the door before the effect, with no branch
+where its error is caught and the request goes on. These are not reasons to strike: a
+library said to escape the value, with that call not read in that context (an HTML escaper
+does not make a JavaScript string safe); a guard on a sibling route; a check that runs after
+the effect; "no caller found" or "maybe not deployed"; "an operator could configure it";
+"admin only", which lowers the tier and keeps the line. A reader who cannot name the control
+leaves the line `needs_validation` with the check that would settle it, never struck. What
+survives is reported as confirmed; what is struck is listed with its control at file and
+line. The one who found a line never confirms it. (The strike rule: usestrix/strix,
+Apache-2.0.)
 
 The proof is concrete and read from the code: the input, the path from the entry point to the
-sink, the result. Nothing is run against the program to prove a point.
+sink, the result. Nothing is run to prove a finding. The one thing that runs is the project's
+own test suite on this machine, after a fix the user approved, to show the fix holds
+(`fix.md`).
+
+## A second run
+
+Two audits of the same tree find more than one. The second starts from the first report,
+under three rules. A `rejected` line holds only for the same claim on code that has not
+changed since (same content, by commit or hash); a changed file reopens it. A confirmed
+finding whose file changed is proved again from the code as it is, never copied forward,
+because a partial fix reads like a fix. Every `needs_validation` line and every door left
+`open` in the first report is the second run's work, done first. The report says which run
+it is and what it inherited. (The rules: cloudflare/security-audit-skill, MIT.)
 
 ## After a finding is confirmed: the same flaw elsewhere
 
@@ -59,15 +92,42 @@ lines, and the places that looked the same and are safe, with why. A fix that cl
 of five is reported as one of five. (The step, after trailofbits/skills, `variant-analysis`;
 the wording is ours.)
 
+## One round of coverage critique
+
+On a full audit, before the report, a fresh reader gets two lists and nothing else: the
+doors mapped (`code.md`) and the doors actually followed to a sink or to a control. Its one
+job is to find what is missing: a door not mapped (a queue consumer, a CLI subcommand, a
+file the program parses, an IPC handler), a parallel path from a mapped door not followed, a
+door marked done with no path or control beside it. Each door it raises is followed now, by
+the same proof as the rest, or written under `not audited` with why. One round, not a loop:
+what the critic raises is settled once. The critic is a new subagent when one can be
+started, else a separate pass that re-reads the door map before the findings; the scope line
+says which. (The critic: cloudflare/security-audit-skill, MIT.)
+
 ## The report
 
-Findings first, most severe first, nothing above them. Then one line of scope:
+Findings first, most severe first, nothing above them. On a full audit, then one line per
+door, each in one of three states:
 
 ```
-CRITICAL 1 · HIGH 2 · MEDIUM 3 · LOW 4 · UNPROVEN 2
+POST /api/export     reported   critical, src/api/export.ts:34
+GET /api/report      ruled out  session and role check, src/api/report.ts:20
+ipc fs:write         open       handler read, preload not traced
+```
+
+A door is `ruled out` only with its control named as a strike needs it. Doors behind one
+guard and one handler may share a line with their count. Every `open` door is also under
+`not audited`, and a second run starts from them. (One line per door: usestrix/strix,
+Apache-2.0.)
+
+Then one line of scope:
+
+```
+CRITICAL 1 · HIGH 2 · MEDIUM 3 · LOW 4 · NEEDS VALIDATION 2
 audited: 142 source files, 61 dependencies, git history (all refs) to the first commit
 not audited: the mobile client (no source here); the deploy host config (not in the repo)
-tools: npm audit, gitleaks, semgrep ran; trufflehog not installed
+tools: npm audit (advisories of 2026-11-19), gitleaks, semgrep ran; trufflehog not installed
+critic: new subagent, 2 doors raised, both followed
 ```
 
 The scope line is not optional: an audit that does not say what it did not look at reads as a
@@ -90,7 +150,8 @@ hidden under it.
 
 ## What this never does
 
-Changes code: findings go to `atlas-fix` or to the user, each approved. Runs the audited
-program, or anything against it, to prove a finding; the tools these passes use only read. Installs a scanner or a tool without a yes; a tool that is missing
-is named in the scope line and its pass is marked `not run`. Quotes a secret's value, in a
+Changes code without a yes: fixes go through `fix.md`, `atlas-fix` or the user, each
+approved. Runs the audited program, or anything against it, to prove a finding; the tools
+these passes use only read. Installs a scanner or a tool without a yes; a tool that is
+missing is named in the scope line and its pass is marked `not run`. Quotes a secret's value, in a
 finding or anywhere.

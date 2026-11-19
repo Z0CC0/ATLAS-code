@@ -8,7 +8,10 @@ without a window. One app, not two: the interface and the agent go through the s
 It applies to anything with an interface a person operates and a state that outlives the
 session: a desktop app, a web app with a backend, a mobile app's core, a tool with a window.
 It does not apply to a static site, a one-file script, or a library (a library is already
-the second door). When it does not apply, say so in one line and move on.
+the second door). A site whose visitors author no state that outlives their visit (a
+landing page, documentation, a portfolio) counts as a static site here, whatever serves it;
+one where they do (an account, a saved document, a setting) is an app, and all of this
+applies. When it does not apply, say so in one line and move on.
 
 An existing app that was not built this way is not rewritten for it: the rule is offered
 once, with what it would take, and the person decides.

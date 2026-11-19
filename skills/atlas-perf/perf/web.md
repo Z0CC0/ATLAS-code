@@ -9,6 +9,11 @@ slow connection: a developer machine on fibre hides everything.
 Lighthouse or the browser's performance panel, through `atlas-browser` when it exists; the
 bundler's analyser for what is in the bundle. Three runs at least; page measurements are
 noisy.
+Each of the three gets a word, `pass` or `fail`, against the marks Google calls good: LCP at
+most 2.5 s, INP at most 200 ms, CLS at most 0.1. Field data is read at its 75th percentile,
+lab runs at their median. INP needs an interaction recorded (the performance panel, or a
+Lighthouse timespan); a page load alone has none, and the word is then `not measured`.
+(The pass marks: affaan-m/ecc, MIT; the thresholds are web.dev's.)
 
 ## Where it usually is, in the order worth checking
 

@@ -33,6 +33,8 @@ failing test first is a guess with a patch. If it cannot be reproduced, that is 
 say what was tried and stop.
 Then the smallest change that turns it green, and the suite. The commit says what was wrong,
 not only what changed.
+The first fix did not hold, or the symptom shows far from where the data goes wrong:
+`defect.md`, one hypothesis per change and a stop after the third failed fix.
 Look for the same mistake in the neighbouring code; each occurrence is a line at Gate 2, not
 a silent extra fix.
 

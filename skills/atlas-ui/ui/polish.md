@@ -42,6 +42,9 @@ Numbers that change or line up in columns (prices, counters, timers, tables):
 `font-variant-numeric: tabular-nums`.
 Line height tighter on large headings, looser on body. Letter spacing slightly negative on
 large display sizes, never on small text.
+Light text on a dark ground needs more air as well as one weight less: line height about
+0.05 to 0.1 higher and letter spacing about 0.01 em wider on body sizes, or it clots.
+(pbakaus/impeccable, Apache-2.0.)
 The browser's own defaults belong to no design: text selection colour, the caret, custom
 scrollbars where the project styles them, the focus ring, the underline offset of links,
 the numerals in tables. Each takes the palette, or the screen has two designs on it. (From
@@ -65,6 +68,13 @@ A disabled control says why nearby when it is not obvious. A button that starts 
 slow shows it is working and cannot be pressed twice; its width does not change when the
 label does.
 The cursor tells the truth: pointer on what navigates or acts, default elsewhere.
+A label that sits low in its button is centred by trimming the text box to the capitals and
+the baseline (`text-box: trim-both cap alphabetic`) on a block span inside the button, not
+on the button, whose padding would collapse; a browser without it shows what it showed.
+Check: the space above the capitals and below the baseline differ by 1 px or less.
+A confirmation button names the action ("Delete 3 files", "Leave without saving"), never
+"OK" or "Yes"; and what can be undone gets an undo instead of a confirmation (`a11y.md`).
+(Both: pbakaus/impeccable, Apache-2.0.)
 
 ## Movement
 

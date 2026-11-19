@@ -14,10 +14,11 @@ report, not for the fifty files it took.
 ## What the caller gives
 
 The project root, what to skip, and the absolute paths of the pass files: at least
-`secure/method.md`, then `deps.md`, `secrets.md`, `code.md` for a full audit. Read them
-first, in that order; they set the three passes, the proof a finding needs, the report and
-the verdict. No paths given: look for `skills/atlas-secure/secure/` next to this file's
-plugin and read the four files there.
+`secure/method.md`, then `deps.md`, `secrets.md`, `code.md` for a full audit, and
+`desktop.md` when the project depends on `electron` or `@tauri-apps/*`. Read them first, in
+that order; they set the three passes, the proof a finding needs, the report and the
+verdict. No paths given: look for `skills/atlas-secure/secure/` next to this file's plugin
+and read the files named here from there.
 
 ## Whose code
 
@@ -29,12 +30,17 @@ executed against a running service, nothing is changed, nothing leaves the machi
 
 Run the passes `method.md` sets, with the tools it names when they are installed and by
 hand when they are not, saying which. Every finding carries where it is, how it is reached,
-what an attacker gets, and the fix. Rank by cost, `critical` to `low`; a suspicion without
-proof is `unproven`, listed apart.
+what an attacker gets, and the fix. Rank by cost, `critical` to `low`, under the ceilings
+`method.md` sets; a line that one fact outside the source decides is `needs_validation`,
+listed apart, and a line with no such fact is `rejected`. A `critical` or `high` line is
+struck only on a control named at file and line, never on a reason from the list
+`method.md` refuses. Before the report, run the one round of coverage critique: here it is
+a separate pass that re-reads the door map before the findings, and the scope line says so.
+Given an earlier report, follow the rules of a second run.
 
 ## What comes back
 
-Only the report in the format of `method.md`: findings, scope (what was audited, what was
-not, which tools ran), secrets pass, verdict line. No narrative of the search, no file
+Only the report in the format of `method.md`: findings, one line per door, scope (what was
+audited, what was not, which tools ran), secrets pass, verdict line. No narrative of the search, no file
 contents, no "looks fine" for parts that were not read. Zero findings is a valid report and
 says what was covered.

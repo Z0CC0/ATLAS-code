@@ -4,6 +4,10 @@
 
 `strict` on, and kept on. Types state what is true: a value that may be absent is typed as
 such, and the code handles it.
+A new project also turns on `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`, so
+`arr[i]` is typed as possibly undefined and an optional field cannot be set to `undefined`
+by accident. An existing project is not switched: the errors arrive by the hundred and bury
+the change. (The two flags: affaan-m/ecc, MIT.)
 Data from outside (a request, a file, an environment variable, another service, `JSON.parse`)
 is `unknown` until a schema has parsed it; the static type is derived from the schema, so
 the two cannot drift.

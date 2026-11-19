@@ -21,21 +21,26 @@ A screen is one of four things, and the kind decides every tie. **Persuade**: it
 attention and an action in seconds; the one idea gets the size and the space. **Operate**:
 a tool used for hours; scanning, speed and the controls people already know win, and the
 product's own character is allowed exactly four things: the type, the palette, the density
-and one signature move; it never invents the navigation or the controls. **Read**: a long
-text; structure for comprehension, measure, rhythm, nothing that competes with the words.
-**Experience**: the content leads (a map, a canvas, a video) and the interface recedes
-until needed. Name the kind in the brief; a tool designed like a pitch is the most common
-way a screen goes wrong. (The four modes and the four things a tool may own are
-pbakaus/impeccable's, Apache-2.0.)
+and one signature move; it never invents the navigation or the controls. Its palette may
+own colour that does a job: a coloured rail or header, a tinted ground, state and data
+colours; a grey screen with one accent is the category's default, not a decision. **Read**:
+a long text; structure for comprehension, measure, rhythm, nothing that competes with the
+words. **Experience**: the content leads (a map, a canvas, a video) and the interface
+recedes until needed. Name the kind in the brief; a tool designed like a pitch is the most
+common way a screen goes wrong. (The four modes, the four things a tool may own and its
+working colour are pbakaus/impeccable's, Apache-2.0.)
+
+A screen that persuades also reads `page.md` and `copy.md`: the fact sheet is filled before
+the decisions below, and the page plan follows them.
 
 ## The decisions
 
 Write them down in a few lines before any component; they are the brief the rest is held
 to.
 
-**Type.** One family, two at most, and why. A scale with clear steps, few sizes. Weight and
-size carry hierarchy before colour does. Body text at a comfortable measure, roughly 45 to
-75 characters a line.
+**Type.** One family, two at most, and why (how it is chosen and loaded: `taste.md`). A
+scale with clear steps, few sizes. Weight and size carry hierarchy before colour does. Body
+text at a comfortable measure, roughly 45 to 75 characters a line.
 **Colour.** A neutral range that does most of the work; one accent, used for the thing that
 matters and little else; the semantic colours (danger, success, warning) kept apart from
 the accent. Dark mode is designed, not inverted.
@@ -45,6 +50,9 @@ boxes do.
 **Shape and depth.** One radius family; flat, bordered or elevated, picked and kept.
 **Voice.** How the interface speaks: labels as verbs, sentence case or not, how errors are
 worded.
+**Recomposition.** One row per component: what it becomes at 1440, 1024, 768 and 390
+(columns, stacking order, what hides or turns into another control, heading size), written
+before code and checked at those widths. The format is in `page.md`.
 
 One thing that is the product's own: a layout idea, a typographic choice, a way of showing
 its data. One is enough; three is noise. Written as one sentence before building: "on this

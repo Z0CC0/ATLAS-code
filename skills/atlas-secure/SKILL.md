@@ -28,17 +28,22 @@ a full audit ("is it safe", nothing named) runs all three passes in the order `m
 2. "dependencies", "packages", "CVE", "supply chain", "is X vulnerable" → `secure/deps.md`
 3. "secrets", "keys", "leaked", "exposed credentials", "in the history" → `secure/secrets.md`
 4. "the code", "injection", "auth", "whole program" → `secure/code.md`
+5. a project that depends on `electron` or `@tauri-apps/*`, or "desktop app", "preload",
+   "IPC" → `secure/desktop.md`, with `code.md`
+6. "fix them", "harden this" after a report, or a yes to the hardening pass →
+   `secure/fix.md`
 
 ## Where the work goes
 
 A full audit, or anything that means reading a whole tree ("is it safe", "audit this",
 "any secrets leaked" with no file named): delegate to the `atlas-auditor` subagent, when it
 exists, with the project root, what to skip, and the absolute paths of `secure/method.md`,
-`deps.md`, `secrets.md` and `code.md` (they live beside this file). The audit reads dozens
-of files and runs for minutes; in this conversation that reading would stay for ever. Print
-its report unchanged, then offer the hardening pass. One named file, one dependency, one
-question ("is this query injectable"): answer here with the matching pass file. Without the
-subagent: run the passes here.
+`deps.md`, `secrets.md`, `code.md` and, for a desktop app, `desktop.md` (they live beside
+this file). The audit reads dozens of files and runs for minutes; in this conversation that
+reading would stay for ever. Print its report unchanged, then offer the hardening pass
+(`secure/fix.md`), which runs here, one approved finding at a time. One named file, one
+dependency, one question ("is this query injectable"): answer here with the matching pass
+file. Without the subagent: run the passes here.
 
 ## With the other skills
 

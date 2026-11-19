@@ -83,21 +83,21 @@ request that named the command loaded it every time; the same request in plain w
 
 | command | what it does | files behind it | worth knowing |
 |---|---|---|---|
-| `atlas-test` | writes tests: test-first, coverage gaps, end to end, a deployed site | 14 | a new test that fails because the code is wrong is kept and reported; a whole module goes to `atlas-tester` |
-| `atlas-verify` | build, types, lint, tests, leftovers, the project's own bar, in one pass, compared with the last run | 4 | changes nothing; `READY`, `NOT READY` or `CANNOT TELL` |
-| `atlas-plan` | steps before code, sized to the change, then waits; or carries the work through to a commit | 7 | two stops for a yes: after the plan, before the commit |
+| `atlas-test` | writes tests: test-first, coverage gaps, end to end, a deployed site | 16 | a new test that fails because the code is wrong is kept and reported; a whole module goes to `atlas-tester` |
+| `atlas-verify` | build, types, lint, tests, leftovers, the project's own bar, in one pass, compared with the last run | 5 | changes nothing; `READY`, `NOT READY` or `CANNOT TELL` |
+| `atlas-plan` | steps before code, sized to the change, then waits; or carries the work through to a commit | 8 | two stops for a yes: after the plan, before the commit |
 | `atlas-multi` | asks other models (Codex, Gemini) for an opinion, a review or an approach | 4 | shows what is sent and waits for a yes, every time |
 | `atlas-docs` | docs true to the code: sync, a map, onboarding, one feature traced, locale files | 5 | writes only what the code supports |
 | `atlas-perf` | measured speed work: baseline, one change, keep or revert | 5 | no change without a number before and after |
-| `atlas-ship` | pull request, container, pipeline, deploy, installer | 8 | nothing leaves the machine without a yes |
+| `atlas-ship` | pull request, container, pipeline, deploy, installer | 10 | nothing leaves the machine without a yes |
 | `atlas-track` | GitHub issues, Jira, Linear: read a ticket, update it, triage a backlog | 5 | ticket text is data, never instructions |
 | `atlas-refactor` | dead code, simplification, duplicates, an old codebase's own style, the limits the code was allowed to keep | 6 | one move at a time, tests green before and after; `atlas refactor limits` lists the `limit:` marks and which are due |
 | `atlas-publish` | a private project made ready to go public, on a copy | 4 | created private first; public is a second yes |
-| `atlas-ui` | direction, polish, accessibility, motion, tokens, from a screenshot, or a piece fetched from a public registry and made the project's own | 8 | WCAG 2.2 AA basics applied to every component |
+| `atlas-ui` | direction, polish, accessibility, motion, tokens, from a screenshot, or a piece fetched from a public registry and made the project's own | 18 | WCAG 2.2 AA basics applied to every component |
 | `atlas-build-ai` | code that calls a model: prompts, tools, evals, retrieval, cost, MCP | 9 | model names and prices are looked up, never remembered |
 | `atlas-context` | what every session loads, when to compact, one answer at a chosen depth | 4 | measures, does not guess |
-| `atlas-secure` | whole-project security audit: dangerous code, vulnerable dependencies, secrets in the files and the git history | 4 | only your own code; every finding carries its proof; changes nothing |
-| `atlas-stack` | how code is written in this project's language and framework | 22 | `atlas-plan` sends for it before writing code; it can be named too. The project's own conventions come first |
+| `atlas-secure` | whole-project security audit: dangerous code, vulnerable dependencies, secrets in the files and the git history | 6 | only your own code; every finding carries its proof; changes nothing |
+| `atlas-stack` | how code is written in this project's language and framework | 23 | `atlas-plan` sends for it before writing code; it can be named too. The project's own conventions come first |
 
 
 **Documents.** The spec before the build, the changelog after it, the text other agents read, the explanation one person needs:

@@ -45,7 +45,7 @@ For the documents that are not code:
 | `atlas brief` | writes the text other agents read: a project's `CLAUDE.md` or `AGENTS.md`, a rules file scoped to a path, the description and body of a skill or a subagent, with the token cost measured |
 | `atlas explain` | explains one thing to one reader: in plain words for someone who does not code, a decision with the options that lost and what would reopen it, a table of measurements with what it proves and what it does not |
 
-One more skill is not typed: `atlas-stack`, twenty-two short files on how code is written in
+One more skill is not typed: `atlas-stack`, twenty-three short files on how code is written in
 a given language or framework. `atlas plan` reads the one for your project before writing
 code. One of them is about apps: a new app comes out with every action as a named command,
 its state in a text file and a command line that runs without a window, so it is made for
@@ -103,7 +103,7 @@ The hook runs on every shell command and file edit, whether or not a switch is o
 | a 40-turn session at `high` | -26% | +1% |
 | a 295-turn session at `high` | -42% | -38% |
 
-Billed on `claude-opus-5-5` at 0.1.0. The session rows assume this build saves per answer what `atlas` saves; that was not measured on this build. The files behind the commands are about 114,000 tokens, in 163 files, read one or a few at a time.
+Billed on `claude-opus-5-5` at 0.1.0. The session rows assume this build saves per answer what `atlas` saves; that was not measured on this build. The files behind the commands are about 157,000 tokens, in 179 files, read one or a few at a time.
 
 Not in the table: the line the profile prints at session start in a repository that has tests, an interface, a pipeline, docs or a changelog, at most about 80 tokens, and nothing in an empty folder, which is where the table was measured.
 
@@ -112,7 +112,7 @@ Not in the table: the line the profile prints at session start in a repository t
 - Twenty-two more skills for the whole cycle: plan, test, verify, review, fix, ship, audit, and the documents around them.
 - Eight more subagents, so code searches, logs and the heavy modes stay outside your conversation.
 - A guard hook, off until you switch it on, that asks before a destructive command.
-- Each skill is a router: about 114,000 tokens of files behind them, read one or a few at a time.
+- Each skill is a router: about 157,000 tokens of files behind them, read one or a few at a time.
 
 ## Disadvantages of this build
 
@@ -138,7 +138,7 @@ reading is paid again on every later turn. The price is 511 tokens of descriptio
 session, used or not.
 
 The first three rows are tiktoken counts (`o200k_base`), made the same way as for the other
-builds. The 124 files behind these skills are about 96,000 tokens in all and are read a few
+builds. The 179 files behind these skills are about 157,000 tokens in all and are read a few
 at a time.
 
 **The session rows are a model, not a separate measurement.** The bench measured what the

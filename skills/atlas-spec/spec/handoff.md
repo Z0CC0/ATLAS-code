@@ -28,6 +28,17 @@ on it, or the step is written for the stated assumption with a marker to revisit
 5. The order of steps lets the first "done looks like" statement be demonstrated as early as
    possible: a plan that proves nothing until the last step is a plan to reorder.
 
+## A cold reader
+
+After the five checks and before the plan is shown, a fresh subagent that has not seen the
+conversation reads the spec and the plan, and nothing else from it, and lists only the
+questions where a wrong guess would change what gets built. Each question is sorted into one
+of three: answered in the text (the reader missed it, or the text says it badly, and the text
+is made clearer); minor (settled here, and marked in the plan as the agent's call, which the
+user can strike); the user's (asked once, all in one message). A reader that finds nothing
+is a result, and is said. Wording, style and questions whose answer changes no step are not
+listed. (The cold reader: obra/superpowers, MIT.)
+
 ## What comes back
 
 A short list of the gaps found, each with the section of the spec and the step of the plan it

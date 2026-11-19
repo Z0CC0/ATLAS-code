@@ -12,6 +12,11 @@ at 10 or 18. Space between related things smaller than space between groups (8 i
 card, 24 between cards); the biggest space on the screen marks the biggest division. Edges
 aligned to a grid the eye can feel: left edges of text in a column line up, numbers right-
 aligned, icons on the same baseline as their label.
+That scale is for tools. A screen that persuades (`direction.md`) extends it to 80, 96 and
+128: the space between two bands is 80 to 128 px on a desktop and 48 to 64 on a phone, so a
+page does not read as a settings screen. Check: at 1440 the `padding-block` of each band is
+80 or more. (The section spacing: the DESIGN.md files collected in
+voltagent/awesome-design-md, MIT.)
 
 ## Type: two faces, five sizes, three weights
 
@@ -22,10 +27,36 @@ Weights: regular, medium, bold, nothing else; emphasis by weight or colour, neve
 Line length 45 to 75 characters. Capitals only for very short labels, and then with letter-
 spacing. Numbers in tables with tabular figures.
 Display type: tracking −0.02 to −0.05 em, leading 0.85 to 1.05, `text-wrap: balance`, a
-measure of about 14 characters so a headline is two lines or fewer at every width. Text:
-16 to 20 px with leading 1.45 to 1.6. Nothing sits between the lead size and the heading
-size: a size that is "a bit bigger than body" is a sixth size. (Numbers from
-Leonxlnx/taste-skill, MIT, consistent with the 1.2 to 1.25 ratio above.)
+measure of about 14 characters so a headline is two lines or fewer at 1440 and three at
+most on a phone. Text: 16 to 20 px with leading 1.45 to 1.6. Nothing sits between the lead
+size and the heading size: a size that is "a bit bigger than body" is a sixth size.
+(Numbers from Leonxlnx/taste-skill, MIT, consistent with the 1.2 to 1.25 ratio above.)
+The scale above is for tools; a page that persuades capped at 32 px has a timid first
+screen. Its own scale, as clamp bands from 390 to 1440 wide:
+- display `clamp(2.25rem, 1.2rem + 4.5vw, 5rem)`, about 37 to 80 px;
+- section heading `clamp(1.75rem, 1.1rem + 2.4vw, 3rem)`, 28 to 48 px;
+- sub-heading `clamp(1.375rem, 1.2rem + 0.6vw, 1.75rem)`, 22 to 28 px;
+- lead 18 to 20 px, body 16 to 18 px.
+Each heading step at least 1.3 times the next from 1024 wide, 1.2 below. Check: at 1440 the
+computed display size is 56 or more and at least 1.3 times the section heading. (The page
+scale: after leonxlnx/taste-skill, MIT, and the collected DESIGN.md files.)
+
+## The typeface, chosen and loaded
+
+The brief names the face and a reason drawn from the product: its subject, its readers, the
+place or era it belongs to. "It looks modern" or "it is tech" is not a reason. On a screen
+that persuades a system stack is not a choice; on a working screen a system or workhorse
+face is fine. The faces every generator reaches first need their reason written out: Inter
+as display, Space Grotesk, DM Sans, Plus Jakarta Sans, Outfit, Instrument Sans, Fraunces,
+Playfair Display, IBM Plex (list dated 2026, re-read in a year like the tells).
+Loading: woff2 files served by the project, not a hosted stylesheet, which adds a
+connection and hands the visitor's address to a third party; the licence checked as OFL or
+Apache; one variable file rather than four weights, four files at most; a preload for at
+most the two files the first screen uses; `font-display: swap`; a fallback face with
+`size-adjust`, `ascent-override` and `descent-override` so the swap moves nothing. Check:
+`document.fonts` holds the face as loaded, the network shows no font from another host, and
+the swap shifts no layout. (Choosing: pbakaus/impeccable, Apache-2.0; loading:
+nextlevelbuilder/ui-ux-pro-max-skill, MIT, and the collected DESIGN.md files.)
 
 ## Colour: 60-30-10, and one accent
 
@@ -35,6 +66,10 @@ green mean error, caution, success and are used for nothing else. Text contrast 
 4.5:1, large text 3:1; a disabled state is lower contrast, not a different hue. Dark mode is
 not the inverse: dark surfaces slightly lighter than the background, shadows replaced by
 borders or tonal lifts, saturated accents desaturated a step.
+A dark ground is not `#000`: a near-black carrying a trace of the palette's hue, with the
+surfaces above it in three or four steps an equal lightness apart. Check: no background
+computes to `rgb(0, 0, 0)`, and neighbouring steps differ by the same lightness within one
+point. (The stepped dark grounds: the collected DESIGN.md files.)
 
 ## Surfaces and depth
 
@@ -60,16 +95,17 @@ Apache-2.0.)
 ## Hierarchy: one thing first
 
 Each screen has one primary action, in the accent, and everything else secondary or
-tertiary (outline, text-only). One heading at the top size; the rest a step down. Density
-chosen for the task: a dashboard denser than a form, a reading page sparser than both.
+tertiary (outline, text-only); a long page has one per band (`page.md`). One heading at
+the top size; the rest a step down. Density chosen for the task: a dashboard denser than a
+form, a reading page sparser than both.
 Empty, loading, error and success states designed, not left to the browser default; the
 empty state says what to do next.
 
 ## Motion, restrained
 
-Transitions 150 to 250 ms, ease-out on enter and ease-in on exit; nothing bounces in a
-tool. Motion explains a change of state (where the panel came from) and is otherwise
-absent; `prefers-reduced-motion` respected.
+Motion explains a change of state (where the panel came from) and is otherwise absent;
+nothing bounces in a tool. Durations, curves and reduced motion: `motion.md`, the one
+source of those numbers.
 
 ## The tells of a screen made without taste
 
@@ -84,6 +120,16 @@ focus; monospace worn as a costume for "technical"; the big-number-small-label m
 template; hard offset shadows (`4px 4px 0`) outside a design that is actually brutalist;
 light or dark chosen because of the product's category instead of where it is used.
 (pbakaus/impeccable's refuse list, Apache-2.0.)
+On a page that persuades, also: text filled with a gradient; a coloured glow behind the
+hero; a grid-line background at a fixed cell; a blinking cursor in the hero; a pulsing dot
+with no live data behind it; section numbers 01, 02, 03. Each is a default refusal that a
+written reason can lift.
+When the brief left the look free, a page falls into one of four looks: a cream ground,
+serif display and a terracotta accent; near-black with one neon colour and glowing edges;
+editorial hairlines, italic serif and small spaced monospace labels; flat saturated colour,
+black boxes and offset shadows. Landing in one unasked means the direction was never made;
+chosen for a reason in the brief, any of them is fine. Check: the ground, display face and
+accent of the result compared with the four. (Both lists: pbakaus/impeccable, Apache-2.0.)
 Tells have a date. What a generated page looked like in 2023 (purple gradients, icon
 cards) is not what it looks like now; the lists of "use this instead" become the next
 year's tells. So the list above is dated 2026 and is re-read, not trusted, in a year.
@@ -108,6 +154,13 @@ else's server; a CC BY picture carries its credit where it is shown or on a cred
 and the line goes into the project beside the file. Faces, logos and artworks under
 copyright are not made safe by a licence tag on a photograph of them. (The finder with its
 credits: after Leonxlnx/taste-skill, MIT; the index: Openverse, run by WordPress.)
+Pictures are planned with the sections, not found at the end: each slot named with its
+section, its aspect ratio and what it must show; candidates found for all of them; one
+question asks for the whole batch. A piece of the product built in HTML (`page.md`) needs
+no picture. Until the yes, a slot holds a box of its final aspect ratio, marked in the box
+as a stand-in and with `data-standin`; the report lists every stand-in on a `standin` line,
+and a page with one is not called finished. Check: the count of `[data-standin]` on the page
+equals the report's list. (The batch and the marked stand-in: leonxlnx/taste-skill, MIT.)
 
 ## How to use this
 

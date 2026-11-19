@@ -20,7 +20,8 @@ project calls for, once; they are short.
 By the project's files:
 `package.json` with TypeScript or JavaScript → `typescript.md`; plus by dependency:
 `react`, `next`, `react-native`, `expo`, `vite` → `react.md`; `vue`, `nuxt` → `vue.md`;
-`@angular/core` → `angular.md`
+`@angular/core` → `angular.md`; `@capacitor/core` or a `capacitor.config.*` file →
+`native-shell.md`
 `pyproject.toml`, `requirements.txt`, `manage.py` → `python.md`; plus `torch`,
 `tensorflow`, `sklearn`, `xgboost` or training code → `ml.md`
 `go.mod` → `go.md`
@@ -43,6 +44,9 @@ a new app or program with an interface a person operates (desktop, web with a ba
 mobile, a tool with a window), or a new action added to one built this way → `app.md`:
 every action a command, the state a text file, a command line without a window, so an
 agent can drive what was made for people
+anything with a screen people look at (a site, a web or mobile app, a window) → also
+`atlas-ui`, its `method.md` and its check in a browser: these files cover the code, not
+what the screen looks like
 
 No file for the stack: say so in one line and write by the project's own code alone.
 

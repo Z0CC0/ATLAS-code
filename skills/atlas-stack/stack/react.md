@@ -40,6 +40,23 @@ virtualised. With the React Compiler on, manual `useMemo` and `useCallback` are 
 redundant: follow the project.
 Code split at routes and at heavy, rarely used parts.
 
+## What the visitor receives
+
+On the web the build is judged by what renders, so a green build is not the end. Budgets on
+a mid-range phone: Largest Contentful Paint 2.5 s or less, Cumulative Layout Shift 0.1 or
+less, Interaction to Next Paint 200 ms or less; the first route's script about 170 KB
+gzipped or less. The main image of the first screen has its width and height, a `srcset`
+sized to the layout, `fetchpriority="high"`, and is never lazy; images below it are lazy.
+Fonts are served from the project in woff2, at most the two files the first screen uses
+preloaded, with `font-display: swap` and a fallback adjusted to the same metrics, so the
+swap shifts nothing.
+Every view that waits for data has a loading, an empty and an error state, whatever the
+framework; Next's segment files are one way to have them, not the rule. Shapes and kinds are
+`atlas-ui`'s `method.md`.
+Check: a mobile Lighthouse run on the built site, the three numbers and the script weight
+written in the report; `atlas-perf` when one is over.
+(The three limits are the ones Google publishes for Core Web Vitals.)
+
 ## Forms
 
 The project's form library when it has one; validation with the same schema the server

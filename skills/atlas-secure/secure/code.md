@@ -13,6 +13,14 @@ An attacker starts where their input enters. Find every door before judging any 
 - HTTP: routes, controllers, handlers, server actions, GraphQL resolvers, webhook receivers.
 - Other transports: message-queue consumers, scheduled jobs that read external data, CLI
   arguments, files or uploads the program parses, environment it trusts.
+- Desktop: IPC handlers, the preload bridge, custom protocols, deep links, a local server,
+  the updater. An Electron or Tauri app has its doors there, not in routes: `desktop.md`.
+- Models and tools: text a model reads (a fetched page, a retrieved document, a tool's
+  result, a memory note written from outside content) is a door; a tool that runs with real
+  credentials, a shell or a write is a sink. Two checks: is the approval bound to the exact
+  action and arguments that run, or only to a summary of them; does a tool downstream take
+  arguments the model chose, unchecked? How these are built safely is `atlas-build-ai`'s
+  `tools.md` and `mcp.md`. (Agents as doors and sinks: cloudflare/security-audit-skill, MIT.)
 - The trust boundary: which of these can be reached without authenticating, and which only
   after. A weakness behind a login is lower than the same one in front of it.
 
@@ -66,6 +74,12 @@ These are where a whole-tree audit finds what a per-diff review cannot:
   in; search and filters as an oracle on rows the caller may not read; errors and response
   times that differ between "no such user" and "wrong password"; a bulk action that does
   for a thousand what was authorised for one.
+- **Resource use.** A decompression with no ceiling on output size or ratio; costly work (a
+  slow hash, a parse, a render, an outbound fetch) done before the caller is authenticated; a
+  page size the caller sets with no maximum.
+- **The life of data.** Rows marked deleted still returned by search, export or a count; a
+  permission revoked but still honoured inside a token, a session or a cache until it
+  expires. (These two: cloudflare/security-audit-skill, MIT.)
 - **The small things the audit must not miss**: a `TODO` or `FIXME` that mentions auth,
   tokens or validation; `/debug`, `/env`, `/metrics`, `/admin` reachable without auth; a
   redirect parameter (`next`, `return`, `url`, `redirect`) used unchecked; seed, test or
@@ -79,6 +93,23 @@ half migrated, rolled back.
 The weakness classes above are coverage mapped to OWASP Top 10 (2021), OWASP ASVS and the CWE
 Top 25; every check here is static and read-only, read from the source, never run against the
 program.
+
+## Three family sweeps
+
+Some classes slip past a line-by-line read and show when every member of the family is read
+at once. Grep for each, then read every hit:
+
+- **Archive extraction.** Each entry's resolved path is checked to stay inside the target
+  before the write, symlink and hardlink entries included. A check on the name alone, or one
+  run after extraction, does not count.
+- **XML parser hardening.** Every parser fed outside bytes has external entities and DTDs
+  off. A `setFeature` call inside a try whose catch swallows the error counts as not
+  hardened, because the parser then runs with its defaults.
+- **Validate, then consume.** A signature, a SAML assertion, a token, a schema check: the
+  object validated is the object used. A second lookup after the check (the first element,
+  an index, a re-parse of the raw input) is the flaw.
+
+(The sweeps: usestrix/strix, Apache-2.0.)
 
 ## What falls open
 

@@ -39,6 +39,14 @@ An advisory is not yet a finding. For each one that the tool reports:
 - **Is there a fixed version, and does it cross a major?** It changes the advice, not the
   tier: a fix within the same major is cheap, take it now; one that needs a major upgrade is
   named with that cost.
+- **Which level can fix it?** A package the project does not list itself cannot be upgraded
+  from its own manifest. Name the direct dependency that pulls it in and the shortest chain
+  (`a@1 > b@2 > vuln@3`, from `npm ls <pkg>`, `pnpm why <pkg>`, `pipdeptree -r -p <pkg>` or
+  `go mod graph`), then give the fix at that level: a release of the direct dependency that
+  carries the fixed version, else the package manager's own override (`overrides`,
+  `resolutions`, `pnpm.overrides`), named with the risk that the parent was never tested
+  against it. The same advisory in two lock files of one repository is two lines.
+  (Transitive fixes: usestrix/strix, Apache-2.0.)
 
 Tiers follow `method.md`, set by reachability, not by the advisory's own label alone.
 
@@ -56,15 +64,38 @@ Tiers follow `method.md`, set by reachability, not by the advisory's own label a
   manager's own flag or setting, from its current documentation, never from memory); the
   scripts of what asked to run one read; the ones needed allowed by name in a policy file
   that is committed, and the install frozen to the lock. An unexpected script on a leaf
-  package is its own line.
+  package is its own line, and so is any dependency added since the last audit or the last
+  tag that runs one: it has not run anywhere yet, so it is read before the next install.
 - **Lock file integrity**: the lock exists and is committed; `npm ci` / `--frozen-lockfile`
   used in CI so the resolved versions are the audited ones.
-- **The pipeline as code that grants power**: a workflow that runs on a pull request from a
-  fork with the repository's secrets in reach, or that checks out the pull request's own
-  ref under a privileged trigger; an action pinned to a moving tag instead of a commit; a
-  cache shared between jobs of different trust; a token with write permissions in a job
-  that only reads. Each is a `high` when the repository takes outside contributions, a
-  `medium` otherwise.
+
+## CI and release
+
+The pipeline runs with the repository's secrets, so its files are audited like code. Writing
+one is `atlas-ship`'s `pipeline.md`; here every workflow and release script is read for:
+
+- **Outside text in a run step.** A pull request title, a branch name, an issue or comment
+  body, a commit message expanded straight into a shell line (`${{ github.event.* }}` inside
+  `run:`, or the same in another CI's syntax): the text becomes part of the command. The fix
+  passes it through an environment variable, quoted.
+- **A privileged trigger on outside code.** A workflow on a pull request from a fork with
+  secrets in reach, or one that checks out the pull request's own ref under
+  `pull_request_target` or `workflow_run`.
+- **A third-party action pinned to a tag or a branch** in a job that has secrets or a write
+  token: whoever moves the tag runs in that job. Pin to the full commit. The same in a job
+  with neither is `low`.
+- **A cache crossing trust.** A cache that a pull-request job can write and a release job
+  restores.
+- **A token wider than the job.** Write permissions in a job that only reads.
+- **A private name a public registry can answer.** An internal package with no scope, or a
+  scope with no registry pinned for it, or a second index added beside the public one
+  (`--extra-index-url`): the installer may take a public package of the same name. Whether
+  that name is taken publicly is a fact outside the source, so the line is
+  `needs_validation` with that lookup for the owner.
+
+Each is `high` when outside text or code reaches it (a public repository, issues, forks),
+`medium` otherwise, unless the line above says less. (The section:
+cloudflare/security-audit-skill, MIT.)
 
 ## Report
 
@@ -72,9 +103,11 @@ Findings in the line format of `method.md`, the package and version in place of 
 
 ```
 lodash@4.17.11  high  prototype pollution (CVE-…), reached via the merge in src/config.ts:40 on user-supplied JSON → arbitrary property set. Upgrade to 4.17.21, same major.
+qs@<v> via express@<v> > body-parser@<v>  high  prototype pollution (CVE-…) in query parsing, reached on every request → property set on parsed objects. Upgrade express to a release that carries a fixed qs; else force qs with `overrides`.
 tar@4.4.1  medium  path traversal on archive extract; the project only extracts its own release tarballs, not user input. Upgrade when convenient.
 left-pad@1.0.0  low  unmaintained since 2016, one maintainer; trivial to inline.
 ```
 
-The scope line names the command run, the number of dependencies checked, and whether dev
-dependencies were included.
+The scope line names the command run, the number of dependencies checked, whether dev
+dependencies were included, and the date of the advisory data the tool read: data a month
+old misses a month of advisories.

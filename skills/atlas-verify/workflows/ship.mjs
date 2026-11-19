@@ -46,7 +46,7 @@ const runCheck = (cmd) => agent(
 ).then((r) => ({ command: cmd, ...(r || { ran: false, passed: false, decisive: 'runner returned nothing' }) }))
 
 const security = () => agent(
-  `Review \`${target}\` (run it with Bash to obtain the diff) from the security angle only: input meeting an interpreter, paths, SSRF, deserialisation, raw HTML; secrets in source, public env prefixes, logs; a state-changing handler without the authorisation its neighbours have, IDOR, CSRF; weak crypto; a dependency added or bumped. Read whole changed files and their callers. Each line carries a verdict: confirmed (path read entry to sink, effect shown locally), needs_validation (one fact outside the source decides; name it), rejected (do not report). Never contact anything deployed. Findings only; zero is a correct result.`,
+  `Review \`${target}\` (run it with Bash to obtain the diff) from the security angle only: input meeting an interpreter, paths, SSRF, deserialisation, raw HTML; secrets in source, public env prefixes, logs; a state-changing handler without the authorisation its neighbours have, IDOR, CSRF; weak crypto; a dependency added or bumped. Read whole changed files and their callers. Each line carries a verdict: confirmed (path read entry to sink, effect shown by the path read in the source), needs_validation (one fact outside the source decides; name it), rejected (do not report). Never contact anything deployed. Findings only; zero is a correct result.`,
   { label: 'review:security', phase: 'Checks', schema: FINDINGS, agentType: prefix ? prefix + 'atlas-diff' : undefined },
 )
 

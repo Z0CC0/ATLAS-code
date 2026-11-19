@@ -41,6 +41,20 @@ Contrast is checked for every role pair that will meet: each text role on each s
 role, in every theme, against the numbers in `a11y.md`. A pair that fails is fixed in the
 scale, now, not per component later.
 
+## Layers
+
+Stacking order is a token like colour: named layers, each a fixed value, and no other
+z-index in the project. Start from `layer-base 0`, `layer-dropdown 100`, `layer-sticky 200`,
+`layer-overlay 300`, `layer-modal 400`, `layer-toast 500`, `layer-tooltip 600`, unless the
+project has its own. A dropdown that must open over the sticky header is a question of
+which layer it belongs to, never of a bigger number. Stacking inside one component uses 0
+to 9 under `isolation: isolate` on the component's root, so it never competes with the
+layers. A dialog opened with `showModal()` and a popover sit in the browser's top layer and
+need no z-index. Any other literal value, `9999` above all, is a `raw` line.
+Check: every `z-index` in the source is a layer token or 0 to 9 inside an isolated
+component; open a dropdown under the sticky bar, and it shows above it.
+(Named layers as the only allowed values: nextlevelbuilder/ui-ux-pro-max-skill, MIT.)
+
 ## Move the code onto it
 
 A proposal first: the scale, the roles, and for each stray value the token it would

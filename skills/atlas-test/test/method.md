@@ -46,6 +46,17 @@ It found a bug, or it is wrong. Decide which by reading the code, in one line. A
 stays, marked in the report as `found`, and the code is not changed here unless the mode is
 test-first on that code. A wrong test: fix the test.
 
+## A regression test written after its fix
+
+A test written after the fix it guards, or handed over by someone else, has never been seen
+failing. Prove it: undo the fix, run the test, it must fail for the reason the bug gave;
+restore the fix, it must pass. A test that passes both ways is reported `proves nothing`
+beside its name and is rewritten or removed, because it would stay green if the bug came
+back. The fix is undone in the working tree only, on the fixed files and not on the test,
+never in a commit: `git stash push -- <files>` and `git stash pop` for a fix not committed;
+`git checkout <fix>~1 -- <files>` and `git checkout HEAD -- <files>` for one that is.
+(Proving a regression test by reverting the fix: obra/superpowers, MIT.)
+
 ## Report
 
 ```
